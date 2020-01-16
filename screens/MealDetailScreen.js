@@ -1,19 +1,44 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { MEALS } from '../data/dummy-data';
 import CustomHeaderButton from '../components/HeaderButton';
+import CustomText from '../components/CustomText';
+
+const ListItem = props => {
+  return (
+    <View style={styles.listItem}>
+      <CustomText>{props.children}</CustomText>
+    </View>
+  )
+}
 
 const MealDetailScreen = props => {
-  console.log(props.navigation.getParam('mealId'))
   const mealId = props.navigation.getParam('mealId');
 
   const selectedMeal = MEALS.find(meal => meal.id === mealId);
 
   return (
-    <View style={styles.screen}>
-      <Text>{selectedMeal.title}</Text>
-    </View>
+    <ScrollView>
+      <Image source={{ uri: selectedMeal.imageUrl }} style={styles.image} />
+      <View style={styles.detail}>
+        <CustomText>{selectedMeal.duration}m</CustomText>
+        <CustomText>{selectedMeal.complexity.toUpperCase()}</CustomText>
+        <CustomText>{selectedMeal.affordability.toUpperCase()}</CustomText>
+      </View>
+      <Text style={styles.title}>Igredients</Text>
+      {
+        selectedMeal.ingredients.map(ing => (
+          <ListItem key={ing}>{ing}</ListItem>
+        ))
+      }
+      <Text style={styles.title}>Steps</Text>
+      {
+        selectedMeal.steps.map(step => (
+          <ListItem key={step}>{step}</ListItem>
+        ))
+      }
+    </ScrollView>
   );
 };
 
@@ -32,10 +57,26 @@ MealDetailScreen.navigationOptions = (navigationData) => {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  image: {
+    width: '100%',
+    height: 200
+  },
+  detail: {
+    flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'space-around'
+  },
+  title: {
+    fontSize: 22,
+    fontFamily: 'open-sans-bold',
+    textAlign: 'center'
+  },
+  listItem: {
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 10
   }
 });
 

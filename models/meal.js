@@ -10,7 +10,7 @@ class Meal {
         this.imageUrl = imageUrl;
         this.duration = duration;
         this.ingredients = ingredients;
-        this.step = steps;
+        this.steps = steps;
         this.isGlutenFree = isGlutenFree;
         this.isVegan = isVegan;
         this.isVegetarien = isVegetarien;
