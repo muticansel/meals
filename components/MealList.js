@@ -15,7 +15,8 @@ const MealList = props => {
                     props.navigation.navigate({
                         routeName: 'MealDetail',
                         params: {
-                            mealId: itemData.item.id
+                            mealId: itemData.item.id,
+                            mealTitle: itemData.item.title
                         }
                     })
                 }} />
@@ -24,7 +25,8 @@ const MealList = props => {
 
     return (
         <View style={styles.list}>
-            <FlatList data={props.listData}
+            <FlatList keyExtractor={item => item.id}
+                data={props.listData}
                 renderItem={renderMealItem}
                 style={{ width: '100%' }} />
         </View>
